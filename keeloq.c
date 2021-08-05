@@ -28,7 +28,7 @@ void keeloq_decrypt(uint64_t *key, uint32_t *plaintext, uint32_t *ciphertext, in
         nlf_input = (((*plaintext >> 30) & 0x1) << 4) | (((*plaintext >> 25) & 0x1) << 3) |
                     (((*plaintext >> 19) & 0x1) << 2) | (((*plaintext >> 8) & 0x1) << 1) | (*plaintext & 0x1);
         out = nlf(nlf_input);
-        xor = ((*key >> ((15 - i) % 64)) & 0x1) ^ ((*plaintext >> 31) & 0x1) ^ ((*plaintext >> 15) & 0x1) ^ out;
+        xor = ((*key >> (((nrounds - 1) - i) % 64)) & 0x1) ^ ((*plaintext >> 31) & 0x1) ^ ((*plaintext >> 15) & 0x1) ^ out;
         *plaintext = (*plaintext << 1) | xor;
     }    
 }
